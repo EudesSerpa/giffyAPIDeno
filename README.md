@@ -9,7 +9,7 @@ You need the latest version of Deno to run this API on Local and run the followi
 
 ```bash
 
-deno run --allow-net=:8080 server.ts --port=8080
+deno run --allow-net=:8080 --allow-read server.ts --port=8080
 
 ```
 

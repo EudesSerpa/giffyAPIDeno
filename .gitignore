@@ -1,4 +1,5 @@
 /.vscode/
+.env
 /gh-pages/
 /std/hash/_wasm/target
 /tools/wpt/manifest.json

@@ -1,9 +1,15 @@
 import { Context } from "../deps.ts";
 
-export const authorized = async (ctx: Context, next: Function) => {
-    if (ctx.state.currentUser) {
-        await next();
-    } else {
-        ctx.response.status = 405;
-    }
-}
+export const authorized = async (
+  { response, state }: Context,
+  next: Function
+) => {
+  if (state.currentUser) {
+    await next();
+  } else {
+    response.status = 401;
+    response.body = {
+      error: "Unauthorized",
+    };
+  }
+};
