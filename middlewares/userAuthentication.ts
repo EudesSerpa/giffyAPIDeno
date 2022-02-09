@@ -11,7 +11,7 @@ const users = db.collection<UserSchema>("users");
 
 export const userAuthentication = async (
   { response, cookies, state }: Context,
-  next: Function
+  next: () => void
 ) => {
   try {
     const jwt = await cookies.get("jwt");

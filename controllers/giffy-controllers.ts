@@ -13,7 +13,7 @@ const favs: Collection<FavSchema> = db.collection<FavSchema>("favs");
 export const getFavs = async ({ response, state }: RouterContext<"/favs">) => {
   const { _id: userId } = state.currentUser;
 
-  const userFavs = await findUserFavs(userId, users);
+  const userFavs = await findUserFavs({ userId, collection: users });
 
   response.status = 200;
   response.body = {
@@ -29,7 +29,12 @@ export const deleteFav = async ({
   const { id: favId } = params;
   const { _id: userId } = state.currentUser;
 
-  const ok = await deleteUserFav(userId, favId, users, favs);
+  const ok = await deleteUserFav({
+    userId,
+    favId,
+    collection: users,
+    collectionFromDelete: favs,
+  });
 
   if (!ok) {
     response.status = 406;
@@ -39,9 +44,11 @@ export const deleteFav = async ({
     return;
   }
 
+  const userFavs = await findUserFavs({ userId, collection: users });
+
   response.status = 200;
   response.body = {
-    message: "Fav removed successfully",
+    data: userFavs,
   };
 };
 
@@ -53,7 +60,7 @@ export const postFav = async ({
   const { id: favId } = params;
   const { _id: userId } = state.currentUser;
 
-  const userFavs = await findUserFavs(userId, users);
+  const userFavs = await findUserFavs({ userId, collection: users });
 
   const alreadyExist = userFavs?.some((fav: any) => fav.favId === favId);
 
@@ -70,9 +77,11 @@ export const postFav = async ({
     userId,
   });
 
+  const newUserFavs = await findUserFavs({ userId, collection: users });
+
   response.status = 201;
   response.body = {
-    message: "Fav gif added successfully",
+    data: newUserFavs,
   };
 };
 

@@ -5,10 +5,13 @@
 import { Bson, Collection } from "../deps.ts";
 import { UserSchema } from "../schema/user.ts";
 
-export async function findUserFavs(
-  userId: Bson.ObjectId,
-  collection: Collection<UserSchema>
-) {
+export async function findUserFavs({
+  userId,
+  collection,
+}: {
+  userId: Bson.ObjectId;
+  collection: Collection<UserSchema>;
+}) {
   const result: any = await collection
     .aggregate([
       { $match: { _id: userId } },

@@ -13,6 +13,7 @@ const port = portFromArgs ?? DEFAULT_PORT;
 app.use(
   oakCors({
     credentials: true,
+    origin: true,
   })
 ); // Enable CORS for All Routes and allow cookies in credentials
 app.use(userAuthentication);
