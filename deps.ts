@@ -24,4 +24,4 @@ export {
   Collection,
 } from "https://deno.land/x/mongo@v0.29.1/mod.ts";
 
-export { config } from "https://deno.land/x/dotenv/mod.ts";
+export { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
