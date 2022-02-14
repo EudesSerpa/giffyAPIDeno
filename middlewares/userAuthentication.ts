@@ -1,5 +1,5 @@
 /**
- * Get JWT from cookies and Verify that the user is authorized
+ * Get JWT from request Header
  */
 
 import { Context, verify, Bson } from "../deps.ts";
@@ -10,11 +10,17 @@ import { db } from "../database/connection.ts";
 const users = db.collection<UserSchema>("users");
 
 export const userAuthentication = async (
-  { response, cookies, state }: Context,
+  { request, response, state }: Context,
   next: () => void
 ) => {
   try {
-    const jwt = await cookies.get("jwt");
+    let jwt = "";
+    const authorization = request.headers.get("authorization");
+    const isBearerToken = authorization?.toLowerCase().startsWith("bearer");
+
+    if (authorization && isBearerToken) {
+      jwt = authorization.substring(7);
+    }
 
     if (!jwt) {
       state.currentUser = null;

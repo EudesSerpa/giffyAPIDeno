@@ -2,7 +2,7 @@ import { Context } from "../deps.ts";
 
 export const authorized = async (
   { response, state }: Context,
-  next: Function
+  next: () => void
 ) => {
   if (state.currentUser) {
     await next();

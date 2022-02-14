@@ -10,12 +10,7 @@ const DEFAULT_PORT = 8080;
 const portFromArgs = parse(Deno.args).port;
 const port = portFromArgs ?? DEFAULT_PORT;
 
-app.use(
-  oakCors({
-    credentials: true,
-    origin: true,
-  })
-); // Enable CORS for All Routes and allow cookies in credentials
+app.use(oakCors()); // Enable CORS for All Routes and allow cookies in credentials
 app.use(userAuthentication);
 app.use(giffyRouter.routes());
 app.use(giffyRouter.allowedMethods());

@@ -4,9 +4,8 @@ import {
   getFavs,
   deleteFav,
   postFav,
-  RegisterUserDB,
-  LoginUserDB,
-  LogoutUserDB,
+  Register,
+  Login,
 } from "../controllers/giffy-controllers.ts";
 
 const router = new Router();
@@ -15,8 +14,7 @@ router
   .get("/favs", authorized, getFavs)
   .delete("/favs/:id", authorized, deleteFav)
   .post("/favs/:id", authorized, postFav)
-  .post("/login", LoginUserDB)
-  .post("/logout", LogoutUserDB)
-  .post("/register", RegisterUserDB);
+  .post("/login", Login)
+  .post("/register", Register);
 
 export default router;

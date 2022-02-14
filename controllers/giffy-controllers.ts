@@ -85,7 +85,7 @@ export const postFav = async ({
   };
 };
 
-export const RegisterUserDB = async ({
+export const Register = async ({
   request,
   response,
 }: RouterContext<"/register">) => {
@@ -142,11 +142,7 @@ export const RegisterUserDB = async ({
   }
 };
 
-export const LoginUserDB = async ({
-  request,
-  response,
-  cookies,
-}: RouterContext<"/login">) => {
+export const Login = async ({ request, response }: RouterContext<"/login">) => {
   try {
     if (!request.hasBody) {
       response.status = 400;
@@ -198,12 +194,10 @@ export const LoginUserDB = async ({
 
     const jwt = await create({ alg: "HS512", typ: "JWT" }, payload, key);
 
-    // Set jwt protected to the cookies
-    cookies.set("jwt", jwt, { httpOnly: true });
-
     response.status = 200;
     response.body = {
       message: "Successful user loging",
+      data: jwt,
     };
   } catch (error) {
     console.log(error.message);
@@ -213,16 +207,4 @@ export const LoginUserDB = async ({
       error: error.message,
     };
   }
-};
-
-export const LogoutUserDB = ({
-  response,
-  cookies,
-}: RouterContext<"/logout">) => {
-  cookies.delete("jwt");
-
-  response.status = 200;
-  response.body = {
-    message: "Successful user logout",
-  };
 };
