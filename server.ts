@@ -1,4 +1,4 @@
-import { Application, oakCors, parse } from "./deps.ts";
+import { Application, parse, oakCors, CorsOptions } from "./deps.ts";
 import { green, yellow } from "./dev_deps.ts";
 import giffyRouter from "./routes/giffy.ts";
 import { userAuthentication } from "./middlewares/userAuthentication.ts";
@@ -10,7 +10,21 @@ const DEFAULT_PORT = 8080;
 const portFromArgs = parse(Deno.args).port;
 const port = portFromArgs ?? DEFAULT_PORT;
 
-app.use(oakCors()); // Enable CORS for All Routes
+const whitelist = [
+  "http://localhost:3000",
+  "https://giffys-search.vercel.app/",
+];
+
+const corsOptions: CorsOptions = {
+  origin: (requestOrigin) => {
+    const origins = whitelist;
+    console.log("requestOrigin", requestOrigin);
+
+    return origins; //  Reflect (enable) the requested origin in the CORS response for this origins
+  },
+};
+
+app.use(oakCors(corsOptions));
 app.use(userAuthentication);
 app.use(giffyRouter.routes());
 app.use(giffyRouter.allowedMethods());
