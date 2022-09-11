@@ -12,7 +12,7 @@ const port = portFromArgs ?? DEFAULT_PORT;
 
 const whitelist = [
   "http://localhost:3000",
-  "https://giffys-search.vercel.app/",
+  "https://giffys-search.vercel.app",
 ];
 
 const corsOptions: CorsOptions = {
