@@ -13,6 +13,9 @@ deno run --allow-net --allow-env --allow-read server.ts --port=8080
 
 ```
 
+Remember to put the correct form to access the env variables. This project was deployed with Deno Deploy, therefore we need to change the way we access env variables.
+Go to the connection file and comment/uncomment what is necessary.
+
 ## Contributing
 
 Pull requests are welcome! ('◡')/.
